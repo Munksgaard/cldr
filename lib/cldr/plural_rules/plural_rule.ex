@@ -433,7 +433,7 @@ defmodule Cldr.Number.PluralRule do
               Math.number_or_decimal(),
               Locale.locale_name() | LanguageTag.t(),
               atom() | pos_integer()
-            ) :: Cldr.Number.PluralRule.plural_type()
+            ) :: Cldr.Number.PluralRule.plural_type() | {:error, {module(), String.t()}}
 
       def plural_rule(number, locale, rounding \\ Math.default_rounding())
 
@@ -680,7 +680,7 @@ defmodule Cldr.Number.PluralRule do
               PluralRule.operand(),
               [integer(), ...] | integer(),
               number()
-            ) :: :zero | :one | :two | :few | :many | :other
+            ) :: :zero | :one | :two | :few | :many | :other | {:error, {module(), String.t()}}
 
       # Function body is the AST of the function which needs to be injected
       # into the function definition.

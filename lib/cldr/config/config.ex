@@ -1514,7 +1514,7 @@ defmodule Cldr.Config do
     case Application.ensure_all_started(:gettext) do
       {:ok, _} ->
         gettext_module = gettext(config)
-        gettext_module && ensure_compiled?(Gettext) && ensure_compiled?(gettext_module)
+        not is_nil(gettext_module) and ensure_compiled?(Gettext) and ensure_compiled?(gettext_module)
       {:error, _} ->
         false
     end
