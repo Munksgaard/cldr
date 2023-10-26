@@ -10,7 +10,7 @@ defmodule MyApp.Cldr do
     providers: []
 
     def for_dialyzer do
-      Cldr.put_locale("en")
-      Cldr.put_locale(:en)
+      {:ok, _} = Cldr.put_locale("en")
+      {:ok, _} = Cldr.put_locale(:en)
     end
 end

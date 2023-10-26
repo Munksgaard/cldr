@@ -52,7 +52,7 @@ defmodule Cldr.Locale.Cache do
 
   def put_all_language_tags(language_tags) do
     for {locale, language_tag} <- language_tags do
-      :ets.insert(@table_name, {{:tag, locale}, language_tag})
+      true = :ets.insert(@table_name, {{:tag, locale}, language_tag})
     end
   end
 
@@ -75,7 +75,7 @@ defmodule Cldr.Locale.Cache do
     # reference to the ets table we use for caching
     create_ets_table!()
     all_language_tags = Cldr.Config.all_language_tags()
-    put_all_language_tags(all_language_tags)
+    _ = put_all_language_tags(all_language_tags)
     Process.flag(:trap_exit, true)
     {:ok, @table_name}
   end
@@ -164,7 +164,7 @@ defmodule Cldr.Locale.Cache do
   defp create_ets_table! do
     case :ets.info(@table_name) do
       :undefined ->
-        :ets.new(@table_name, [:named_table, :public, {:read_concurrency, true}])
+        _table = :ets.new(@table_name, [:named_table, :public, {:read_concurrency, true}])
 
         Cldr.maybe_log("Compiler locale cache: Created cache #{inspect(@table_name)} in :ets")
 

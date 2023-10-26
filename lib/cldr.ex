@@ -400,7 +400,7 @@ defmodule Cldr do
     current_locale = get_locale(locale.backend)
 
     try do
-      put_locale(locale.backend, locale)
+      {:ok, _language_tag} = put_locale(locale.backend, locale)
       fun.()
     after
       put_locale(locale.backend, current_locale)

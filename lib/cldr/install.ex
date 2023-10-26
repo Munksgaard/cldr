@@ -67,9 +67,9 @@ defmodule Cldr.Install do
 
     if installation_required?(locale_name, config, force_download?) do
       ensure_client_dirs_exist!(client_locales_dir(config))
-      Application.ensure_started(:inets)
-      Application.ensure_started(:ssl)
-      Application.ensure_started(Cldr.Config.app_name())
+      :ok = Application.ensure_started(:inets)
+      :ok = Application.ensure_started(:ssl)
+      :ok = Application.ensure_started(Cldr.Config.app_name())
       do_install_locale_name(locale_name, config, locale_name in Cldr.Config.all_locale_names())
     else
       output_file_name = locale_output_file_name(locale_name, config)
@@ -217,6 +217,6 @@ defmodule Cldr.Install do
   # Create the client app locales directory and any directories
   # that don't exist above it.
   defp ensure_client_dirs_exist!(dir) do
-    File.mkdir_p(dir)
+    :ok = File.mkdir_p(dir)
   end
 end

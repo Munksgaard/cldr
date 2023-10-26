@@ -1511,9 +1511,13 @@ defmodule Cldr.Config do
   """
   @spec gettext_configured?(t()) :: boolean
   def gettext_configured?(config) do
-    Application.ensure_all_started(:gettext)
-    gettext_module = gettext(config)
-    gettext_module && ensure_compiled?(Gettext) && ensure_compiled?(gettext_module)
+    case Application.ensure_all_started(:gettext) do
+      {:ok, _} ->
+        gettext_module = gettext(config)
+        gettext_module && ensure_compiled?(Gettext) && ensure_compiled?(gettext_module)
+      {:error, _} ->
+        false
+    end
   end
 
   @doc """

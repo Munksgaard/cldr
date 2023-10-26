@@ -54,10 +54,10 @@ defmodule Cldr.Consolidate do
     save_grammatical_gender()
     save_parent_locales()
     save_language_data()
-    save_validity_data()
+    _ = save_validity_data()
     save_bcp47_data()
 
-    all_locales()
+    _ = all_locales()
     |> Task.async_stream(__MODULE__, :consolidate_locale, [],
       max_concurrency: @max_concurrency,
       timeout: @timeout
@@ -72,7 +72,7 @@ defmodule Cldr.Consolidate do
   """
   @spec consolidate_known_locales(Cldr.backend()) :: :ok
   def consolidate_known_locales(backend) do
-    Cldr.known_locale_names(backend)
+    _ = Cldr.known_locale_names(backend)
     |> Task.async_stream(__MODULE__, :consolidate_locale, [], max_concurrency: @max_concurrency)
     |> Enum.to_list()
 
